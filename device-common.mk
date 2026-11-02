@@ -118,10 +118,21 @@ PRODUCT_PACKAGES += \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     android.hardware.renderscript@1.0-impl \
-    gralloc.default \
     libhwc2on1adapter \
     libhwc2onfbadapter \
     libtinyxml
+
+# gralloc.default burada BILINCCI OLARAK CIKARILDI.
+# Bu agac /vendor/lib/hw altinda stok Exynos gralloc'u (gralloc.exynos5.so,
+# Samsung private_handle_t ABI'si, stok Mali ile uyumlu) yukluyor; A10 agacinin
+# kendi gralloc.default modulu ise FARKLI bir private_handle_t yapisina sahip.
+# Ikisi bir arada bulundugunda surecler farkli ABI ile handle uretiyor:
+#   E : invalid gralloc handle
+#   E : GraphicBufferAllocator: Failed to allocate (1 x 1) ... : 2 (ENOENT)
+# 1x1 piksel bile tahsis edilemedigi icin tum uygulamalar "dequeueBuffer failed,
+# error = 2" + GL OOM aliyor ve ekran bos kaliyordu.
+# Tek gralloc ile kalmak sart. ro.hardware.gralloc=exynos5 degeri
+# device/samsung/a2corelte/system.prop icinde ayarli ve KORUNMALIDIR.
 
 # DRM
 PRODUCT_PACKAGES += \

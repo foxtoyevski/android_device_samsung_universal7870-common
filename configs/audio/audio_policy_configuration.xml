@@ -6,7 +6,7 @@
     <globalConfiguration speaker_drc_enabled="false"/>
 
     <modules>
-        <module name="primary" halVersion="3.0">
+        <module name="primary" halVersion="3.0" halLibName="audio.primary.universal7870_go.so" xmlns:xi="http://www.w3.org/2001/XInclude">
             <attachedDevices>
                 <item>Earpiece</item>
                 <item>Speaker</item>
